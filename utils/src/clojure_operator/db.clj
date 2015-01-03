@@ -4,7 +4,7 @@
    https://github.com/Datomic/day-of-datomic/blob/master/src/datomic/samples/schema.clj"
   (:require [datomic.api :as d :refer [db q]]
             [clojure.java.io :as io]
-            [clojure-operator.config :refer [read-config]])
+            [com.myadbox.clj.config :refer [read-config]])
   (:import datomic.Util))
 
 ;===============================================================================

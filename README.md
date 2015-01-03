@@ -1,6 +1,6 @@
 clojure-operator
 ====
-This project is created with `lein new dacom` and modified in directory structure and libs' version
+This project is created with [dacom](https://github.com/bellkev/dacom) and modified in directory structure and libs' version
 A web application built with the DACOM stack.
 
 ## Usage
@@ -15,6 +15,8 @@ A web application built with the DACOM stack.
 `lein run-server`
 
 ### Run client with om
+- lessc is required
+`npm install -g less`
 `lein run-client`
 
 ### Debug, Hack, and Play!

@@ -5,7 +5,7 @@
             [compojure.response :as response]
             [datomic.api :as d :refer [db q]]
             [compojure.core :refer [GET defroutes]]
-            [clojure-operator.config :refer [read-config]])
+            [com.myadbox.clj.config :refer [read-config]])
   (:gen-class))
 
 (defonce conn (atom nil))

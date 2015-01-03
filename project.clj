@@ -19,14 +19,13 @@
                  [org.clojure/clojurescript "0.0-2511"]
                  [cljs-ajax "0.3.3"]
                  [cljs-http "0.1.23"]
-
+                 [sablono "0.2.2"]
                  ;;React
                  [om "0.8.0-beta5"]
                  ;;Cljs REPL
                  [com.cemerick/austin "0.1.5"]
                  ;; DB
-                 [com.datomic/datomic-free "0.9.5067"]
-                 ]
+                 [com.datomic/datomic-free "0.9.5067" :exclusions [joda-time]]]
 
   :plugins [[lein-cljsbuild "1.0.3"]
             [lein-ring "0.8.13"]
@@ -41,7 +40,7 @@
   :source-paths ["src"]
   :target-path "target/"
   :uberjar-exclusions [#".*\.cljs"]
-  :cljsbuild {:builds {:dev {:source-paths ["utils/src" "src/cljs/com/myadbox"]
+  :cljsbuild {:builds {:dev {:source-paths ["utils/src" "src/com/myadbox/cljs"]
                              :compiler {:output-to "static/js/main.js"
                                         :output-dir "static/js"
                                         :optimizations :none
@@ -54,8 +53,8 @@
                                          ;; From Om jar
                                          :preamble ["react/react.min.js"]
                                          :externs ["react/externs/react.js"]}}}}
-  :ring {:init clojure-operator.server/init-conn
-         :handler clojure-operator.server/app}
+  :ring {:init com.myadbox.clj.server/init-conn
+         :handler com.myadbox.clj.server/app}
   :profiles {:dev {
                     ;; This needs to be here because of https://github.com/cemerick/austin/issues/23
                     :plugins [[com.cemerick/austin "0.1.5"]]
@@ -66,7 +65,7 @@
                                :extra-values {:scripts [{:src "../bower_components/react/react.js"}
                                                         {:src "js/goog/base.js"}
                                                         {:src "js/main.js"}
-                                                        {:body "goog.require('clojure_operator.client')"}
+                                                        {:body "goog.require('com.myadbox.cljs.client')"}
                                                         {:body "goog.require('clojure_operator.repl')"}]}}}
              :db [:dev {:main clojure-operator.db}]
              :prod {:main clojure-operator.server

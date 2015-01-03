@@ -8,4 +8,4 @@
                       (.log js/console "Connected to Austin nREPL"))
            :error-handler (fn [e]
                             (.log js/console (str "Unable to connect to nREPL")))
-           :format (ajax/raw-format)})
+           :format :raw})

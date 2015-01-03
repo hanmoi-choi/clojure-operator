@@ -1,4 +1,4 @@
-(ns clojure-operator.config
+(ns com.myadbox.clj.config
   (:require [clojure.java.io :as io])
   (:import (java.io FileNotFoundException PushbackReader)))
 
