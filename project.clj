@@ -19,13 +19,21 @@
                  [org.clojure/clojurescript "0.0-2511"]
                  [cljs-ajax "0.3.3"]
                  [cljs-http "0.1.23"]
+
+                 ;;HTML Templating
+                 [selmer "0.7.8"]
                  [sablono "0.2.2"]
                  ;;React
                  [om "0.8.0-beta5"]
                  ;;Cljs REPL
                  [com.cemerick/austin "0.1.5"]
                  ;; DB
-                 [com.datomic/datomic-free "0.9.5067" :exclusions [joda-time]]]
+                 [com.datomic/datomic-free "0.9.5067" :exclusions [joda-time]]
+                 ;; RabbitMQ
+                 [com.novemberain/langohr "3.0.1"]
+                 ;; Component
+                 [com.stuartsierra/component "0.2.2"]]
+
 
   :plugins [[lein-cljsbuild "1.0.3"]
             [lein-ring "0.8.13"]

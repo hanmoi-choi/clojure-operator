@@ -11,6 +11,7 @@
 (ajax/GET "http://localhost:3000/"
           {:handler (fn [response]
                       (put! server-chan response))})
+
 (def app-state (atom {}))
 
 (defn widget [app owner]
@@ -30,4 +31,7 @@
               [:p (str "If you can read the message above, then you have successfully "
                        "launched your brand-new DACOM-based webapp.")]]]))))
 
-(om/root widget app-state {:target (. js/document (getElementById "app"))})
+(om/root
+  widget
+  app-state
+  {:target (. js/document (getElementById "app"))})

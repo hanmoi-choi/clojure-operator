@@ -39,6 +39,7 @@ Then, if you want to, type (browser-repl) or just (br) into the REPL to start an
 `$ Started server on port 3000`
 
 - Then, for example:
+
 `$ cd <project-root>/dist/static && python -m SimpleHTTPServer`
 `$ Serving HTTP on 0.0.0.0 port 8000 ...`
 
