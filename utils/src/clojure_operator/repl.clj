@@ -13,8 +13,7 @@
   (-> handler
       (cors/wrap-cors
         :access-control-allow-origin #"http://localhost:8000"
-        :access-control-allow-methods ["GET"]
-        :access-control-allow-headers ["Content-Type"])))
+        :access-control-allow-methods [:get :put :post :delete] )))
 
 (defn run
   []
