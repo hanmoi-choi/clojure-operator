@@ -12,7 +12,13 @@
           {:handler (fn [response]
                       (put! server-chan response))})
 
-(def app-state (atom {}))
+(def app-state (atom {:list ["Lion" "Zebra" "Buffalo" "Antelope"]}))
+
+(defn draw-list [app owner]
+  (reify
+    om/IRender
+    (render [_]
+      (html/html [:ul (map #(vector :li %) (:list app))]))))
 
 (defn widget [app owner]
   (reify
@@ -31,7 +37,8 @@
               [:p (str "If you can read the message above, then you have successfully "
                        "launched your brand-new DACOM-based webapp.")]]]))))
 
+
 (om/root
-  widget
+  draw-list
   app-state
   {:target (. js/document (getElementById "app"))})
