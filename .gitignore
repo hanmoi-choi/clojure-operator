@@ -1,0 +1,11 @@
+/.lein-repl-history
+/.nrepl-port
+/.repl/
+.DS_STORE
+/.idea/
+*.iml
+/static/
+/target/
+/bower_components/
+/dist/
+/out/

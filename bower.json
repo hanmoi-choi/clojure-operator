@@ -1,0 +1,7 @@
+{
+  "name": "clojure-operator",
+  "dependencies": {
+    "bootstrap": "3.0.3",
+    "react": "0.12.2"
+  }
+}
