@@ -9,3 +9,4 @@
 /bower_components/
 /dist/
 /out/
+/config/s3.edn
