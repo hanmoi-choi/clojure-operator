@@ -26,10 +26,9 @@
                  [om "0.8.0-beta5"]                         ;; om
                  [com.cemerick/austin "0.1.5"]              ;;clojurescript repl
                  [com.datomic/datomic-free "0.9.5067" :exclusions [joda-time]] ;; DB
-                 ;; RabbitMQ
-                 [com.novemberain/langohr "3.0.1"]
-                 [com.stuartsierra/component "0.2.2"]]      ;;Component
-                 [clj-aws-s3 "0.3.10"]
+                 [com.novemberain/langohr "3.0.1"]          ;;RabbitMQ
+                 [com.stuartsierra/component "0.2.2"]       ;;Component
+                 [clj-aws-s3 "0.3.10"]]                     ;;Amazon-S3
 
 
   :plugins [[lein-cljsbuild "1.0.3"]
