@@ -3,6 +3,7 @@
             [clojure.java.io :as io]
             [aws.sdk.s3 :as s3]))
 
+;; create your own s3.edn
 (def s3-config (myadbox-util/load-config "config/s3.edn"))
 (def s3-cred (:cred s3-config))
 (def s3-bucket (:bucket s3-config))
@@ -16,7 +17,7 @@
 
 
 (def root-dir "/Users/daniel/Downloads/")
-(defn write-to-file [in path]
+(defn copy-stream [in path]
   (with-open [out (io/output-stream (io/file path))]
     (io/copy in out)))
 
@@ -25,8 +26,8 @@
   (let [file-ext (:content-type (s3/get-object-metadata s3-cred s3-bucket key))
         path (str root-dir "profile" ".jpg")
         s3-obj-instream (:content (s3/get-object s3-cred s3-bucket obj-key))]
-    (println (class s3-obj-instream))
-    (write-to-file s3-obj-instream path)))
+    ;;(println (class s3-obj-instream))   ;; com.amazonaws.services.s3.model.S3ObjectInputStream
+    (copy-stream s3-obj-instream path)))  ;; s3/get-object's :cotent is objectInputStream
 
 
 (download-file-from-s3 obj-key)
