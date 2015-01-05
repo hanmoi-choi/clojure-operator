@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta content="text/html;charset=utf-8" http-equiv="content-type"/>
-        <title>Hey There!</title>
-        <link rel="stylesheet" href="css/style.css">
+        <style>
+            ul li input {
+            width: 400px;
+            }
+            ul li button {
+            margin-left: 10px;
+            }
+        </style>
     </head>
     <body>
-        <div id="app"></div>
+        <div id="registry"></div>
+        <div id="classes"></div>
         {{#scripts}}
             <script{{#src}} src="{{src}}"{{/src}}>{{body}}</script>
         {{/scripts}}

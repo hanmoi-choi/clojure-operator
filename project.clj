@@ -7,6 +7,7 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.6.0"]
+                 [me.raynes/conch "0.8.0"]                  ;; shell
                  ;; WEB
                  [ring/ring-core "1.3.2"]
                  [ring/ring-json "0.3.1"]
@@ -19,20 +20,16 @@
                  [org.clojure/clojurescript "0.0-2511"]
                  [cljs-ajax "0.3.3"]
                  [cljs-http "0.1.23"]
-
                  ;;HTML Templating
                  [selmer "0.7.8"]
                  [sablono "0.2.2"]
-                 ;;React
-                 [om "0.8.0-beta5"]
-                 ;;Cljs REPL
-                 [com.cemerick/austin "0.1.5"]
-                 ;; DB
-                 [com.datomic/datomic-free "0.9.5067" :exclusions [joda-time]]
+                 [om "0.8.0-beta5"]                         ;; om
+                 [com.cemerick/austin "0.1.5"]              ;;clojurescript repl
+                 [com.datomic/datomic-free "0.9.5067" :exclusions [joda-time]] ;; DB
                  ;; RabbitMQ
                  [com.novemberain/langohr "3.0.1"]
-                 ;; Component
-                 [com.stuartsierra/component "0.2.2"]]
+                 [com.stuartsierra/component "0.2.2"]]      ;;Component
+                 [clj-aws-s3 "0.3.10"]
 
 
   :plugins [[lein-cljsbuild "1.0.3"]

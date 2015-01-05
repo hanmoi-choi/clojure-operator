@@ -11,16 +11,23 @@
 (ajax/GET "http://localhost:3000/"
           {:handler (fn [response]
                       (put! server-chan response))})
-
 (def app-state
   (atom
-    {:contacts
-     [{:first "Ben" :last "Bitdiddle" :email "benb@mit.edu"}
-      {:first "Alyssa" :middle-initial "P" :last "Hacker" :email "aphacker@mit.edu"}
-      {:first "Eva" :middle "Lu" :last "Ator" :email "eval@mit.edu"}
-      {:first "Louis" :last "Reasoner" :email "prolog@mit.edu"}
-      {:first "Cy" :middle-initial "D" :last "Effect" :email "bugs@mit.edu"}
-      {:first "Lem" :middle-initial "E" :last "Tweakit" :email "morebugs@mit.edu"}]}))
+    {:people
+     [{:type :student :first "Ben" :last "Bitdiddle" :email "benb@mit.edu"}
+      {:type :student :first "Alyssa" :middle-initial "P" :last "Hacker"
+       :email "aphacker@mit.edu"}
+      {:type :professor :first "Gerald" :middle "Jay" :last "Sussman"
+       :email "metacirc@mit.edu" :classes [:6001 :6946]}
+      {:type :student :first "Eva" :middle "Lu" :last "Ator" :email "eval@mit.edu"}
+      {:type :student :first "Louis" :last "Reasoner" :email "prolog@mit.edu"}
+      {:type :professor :first "Hal" :last "Abelson" :email "evalapply@mit.edu"
+       :classes [:6001]}]
+     :classes
+     {:6001 "The Structure and Interpretation of Computer Programs"
+      :6946 "The Structure and Interpretation of Classical Mechanics"
+      :1806 "Linear Algebra"}}))
+
 
 (defn middle-name [{:keys [middle middle-initial]}]
   (cond
@@ -30,52 +37,50 @@
 (defn display-name [{:keys [first last] :as contact}]
   (str last ", " first (middle-name contact)))
 
-(defn contact-view [contact owner]
+(defmulti entry-view (fn [person _] (:type person)))
+
+(defn student-view [student owner]
   (reify
     om/IRender
     (render [_]
-      (html/html
-        [:li (display-name contact)])
-      #_(dom/li nil (display-name contact)))))
+      (dom/li nil (display-name student)))))
 
-(defn contacts-view [app owner]
+(defn professor-view [professor owner]
   (reify
     om/IRender
-    (render [this]
-      (html/html
-        [:div
-         [:h2 "Contact list"]
-         [:ul (om/build-all contact-view (:contacts app))]])
-      #_(dom/div nil
-               (dom/h2 nil "Contact list")
+    (render [_]
+      (dom/li nil
+              (dom/div nil (display-name professor))
+              (dom/label nil "Classes")
+              (apply dom/ul nil
+                     (map #(dom/li nil %) (:classes professor)))))))
+
+(defmethod entry-view :student
+  [person owner] (student-view person owner))
+
+(defmethod entry-view :professor
+  [person owner] (professor-view person owner))
+
+(defn people [app]
+  (->> (:people app)
+       (mapv (fn [person]
+               (if (:classes person)
+                 (update-in person [:classes]
+                            (fn [cs] (mapv (:classes app) cs)))
+                 person)))))
+
+(defn registry-view [cursor owner]
+  (reify
+    om/IRenderState
+    (render-state [_ state]
+      (.log js/console cursor)
+      (.log js/console state)
+      (dom/div #js {:id "registry"}
+               (dom/h2 nil "Registry")
                (apply dom/ul nil
-                      (om/build-all contact-view (:contacts app)))))))
-
-(defn draw-list [app owner]
-  (reify
-    om/IRender
-    (render [_]
-      (html/html [:ul (map #(vector :li %) (:list app))]))))
-
-(defn widget [app owner]
-  (reify
-    om/IWillMount
-    (will-mount [_]
-      (go
-        (om/set-state!
-          owner
-          :om-message
-          (str (:compojure-message (<! server-chan)) ", and Om!"))))
-    om/IRender
-    (render [_]
-      (html/html [:div.message
-             [:div.container
-              [:h1 (om/get-state owner :om-message)]
-              [:p (str "If you can read the message above, then you have successfully "
-                       "launched your brand-new DACOM-based webapp.")]]]))))
-
+                      (om/build-all entry-view (people cursor)))))))
 
 (om/root
-  contacts-view
+  registry-view
   app-state
-  {:target (. js/document (getElementById "app"))})
+  {:target (. js/document (getElementById "registry"))})
