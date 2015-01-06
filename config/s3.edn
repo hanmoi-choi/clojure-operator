@@ -1,4 +1,4 @@
-{:bucket  "myadbox-assets-development"
+{:bucket  "myadbox-assets-prod"
  :cred    {:access-key "AKIAJRRJBKTOT5S53FFQ",
            :secret-key "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"}
  }
